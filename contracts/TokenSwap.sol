@@ -28,6 +28,9 @@ contract StableTokenSwap is
     address indexed toToken,
     uint256 amount
   );
+  event SetEnableA2B(bool enabled);
+    event SetEnableB2A(bool enabled);
+    event OwnershipWithdraw(address indexed token, uint256 amount);
 
   //Add this line to protect the upgradable contract.
   constructor()  initializer  {}
@@ -88,10 +91,12 @@ contract StableTokenSwap is
 
   function setEnableA2B(bool enabled) external onlyOwner {
     enableA2B = enabled;
+    emit SetEnableA2B(enabled);
   }
 
   function setEnableB2A(bool enabled) external onlyOwner {
     enableB2A = enabled;
+     emit SetEnableB2A(enabled);
   }
 
   function getReserves()
@@ -105,6 +110,7 @@ contract StableTokenSwap is
 
   function withdraw(address token, uint256 amount) external onlyOwner {
     IERC20Upgradeable(token).safeTransfer(msg.sender, amount);
+    emit OwnershipWithdraw(token, amount);
     emit Withdraw(token, msg.sender, amount);
   }
 }
