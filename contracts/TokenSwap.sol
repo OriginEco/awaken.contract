@@ -29,7 +29,8 @@ contract StableTokenSwap is
     uint256 amount
   );
 
-  constructor() initializer {}
+  //Add this line to protect the upgradable contract.
+  constructor()  initializer  {}
 
   function initialize(address _tokenA, address _tokenB) public initializer {
     require(
